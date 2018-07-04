@@ -5,25 +5,7 @@ require 'date'
 #
 # OPFファイルを作成するクラス
 #
-class OpfGenerator
-    
-    def add_node(parent, element_name, text=nil, attrs=nil)
-        elem = REXML::Element(element_name)
-
-        unless text.nil? then
-            elem.add_text(text)
-        end
-
-        unless attrs.nil? then 
-            for name, value in attrs 
-                elem.add_attribute(name.to_s.gsub("__", ":").gsub("_", "-"), value.to_s)
-            end
-        end
-
-        parent.add_element(elem)
-        elem
-    end
-
+class OpfGenerator < XmlGenerator
     def package_node()
         package = add_node(@doc, "package", nil, {
             unique_identifier: "uid"
@@ -46,6 +28,36 @@ class OpfGenerator
             content_type: "text/x-oeb1-document"
         })
         add_node(xmeta, "EmbeddedCover", "cover.jpg")
+    end
+
+    def manifest_node(package)
+        manifest = add_node(package, "manifest")
+
+        for file in @data[:files]
+            parts = {
+                href: file.path,
+                id: File.basename(file.path, ".*")
+            }
+
+            case File.extname(file.path).downcase
+            when ".jpg", ".jpeg"
+                parts[:media_type] = "image/jpeg"
+            when ".png"
+                # png -> jpg
+            when ".md", ".txt", ".text"
+                # markdown -> html
+            when ".html", ".htm"
+                parts[:media_type] = "text/x-oeb1-document"
+            when ".css"
+                parts[:media_type] = "text/x-oeb1-css"
+            when ".ttf"
+                parts[:media_type] = "application/x-font-ttf"
+            end 
+
+            unless parts[:media_type].nil?
+                add_node(manifest, "item", nil, parts)
+            end
+        end
     end
 
     # OPFファイルの作成
