@@ -1,12 +1,14 @@
+#-*- encoding: utf-8
 require 'zip'
 require 'base64'
 require 'stringio'
 
-class NotMatchArraySizeError < Exception; end 
-
+#
 # 与えられたデータをZIPに圧縮する
+#
 class ZipArchiver
-    attr_reader :archive
+    # @return [StringIO] 圧縮されたバイナリ
+    attr_reader :archived
 
     def compress(files)
         Zip::OutputStream.write_buffer do |zos|
@@ -18,14 +20,16 @@ class ZipArchiver
         end
     end
 
-    # StringIOに圧縮されたファイルを突っ込む
+    # ZipFileの配列を受け取って圧縮する
+    # @param [Array<ZipFile>] files ZipFileのインスタンス配列
     def initialize(files)
         out = compress(files)
         out.rewind
-        @archive = out.read     # archiveには圧縮済みの文字列が入っている
+        @archived = out.read     # archivedには圧縮済みの文字列が入っている
     end
 
+    # @return [String] Base64に変換されたarchived
     def strict_encode64
-        Base64.strict_encode64(@archive)
+        Base64.strict_encode64(@archived)
     end
 end

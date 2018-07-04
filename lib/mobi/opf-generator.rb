@@ -3,7 +3,7 @@ require 'rexml/document'
 require 'date'
 
 #
-# OPFファイルのジェネレータ
+# OPFファイルを作成するクラス
 #
 class OpfGenerator
     def insert_element(name, data, toc=false, &block)
@@ -74,11 +74,11 @@ class OpfGenerator
 
     # OPFファイルの作成
     # @param [Hash] data ファイルの作成に必要なデータ一式
-    # :title
-    # :creator
-    # :publisher
-    # :description
-    # :files
+    # @option data [String] :title タイトル
+    # @option data [String] :creator 作成者
+    # @option data [String] :publisher 出版社
+    # @option data [String] :description 書籍の概要
+    # @option data [String] :files ファイルの配列
     def initialize(data)
         @doc = REXML::Document.new
         @doc << REXML::XMLDecl.new('1.0', 'UTF-8')
