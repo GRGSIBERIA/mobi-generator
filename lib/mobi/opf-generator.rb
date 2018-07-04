@@ -7,12 +7,6 @@ require 'date'
 #
 class OpfGenerator
     
-    def add_attr(element, attrs)
-        for name, value in attrs 
-            element.add_attribute(name.to_s.gsub("_", "-"), value.to_s)
-        end
-    end
-
     def add_node(parent, element_name, text=nil, attrs=nil)
         elem = REXML::Element(element_name)
 
@@ -21,11 +15,37 @@ class OpfGenerator
         end
 
         unless attrs.nil? then 
-            add_attr(elem, attrs)
+            for name, value in attrs 
+                elem.add_attribute(name.to_s.gsub("__", ":").gsub("_", "-"), value.to_s)
+            end
         end
 
         parent.add_element(elem)
         elem
+    end
+
+    def package_node()
+        package = add_node(@doc, "package", nil, {
+            unique_identifier: "uid"
+        })
+    end
+
+    def metadata_node(package)
+        meta = add_node(package, "metadata")
+
+        dcmeta = add_node(meta, "dc-metadata")
+        add_node(dcmeta, "dc__Title", @data[:title])
+        add_node(dcmeta, "dc__Language", "en-us")
+        add_node(dcmeta, "dc__Creator", @data[:creator])
+        add_node(dcmeta, "dc__Description", @data[:description])
+        add_node(dcmeta, "dc__Date", Date.today.strftime("%d/%m/%Y"))
+
+        xmeta = add_node(meta, "x-metadata")
+        add_node(xmeta, "output", nil, {
+            encoding: "utf-8",
+            content_type: "text/x-oeb1-document"
+        })
+        add_node(xmeta, "EmbeddedCover", "cover.jpg")
     end
 
     # OPFファイルの作成
@@ -46,6 +66,8 @@ class OpfGenerator
         package.add_attribute("unique-identifier", "uid")
         @doc.add_element(package)
 
-        
+        package = package_node()
+        metadata_node(package)
+
     end
 end
