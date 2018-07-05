@@ -1,0 +1,1 @@
+require "./test/mobi/ruby-parser"
