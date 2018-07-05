@@ -1,6 +1,7 @@
 #-*- encoding: utf-8
 require 'rexml/document'
 require 'date'
+require 'stringio'
 
 #
 # OPFファイルを作成するクラス
@@ -72,14 +73,28 @@ class OpfGenerator < XmlGenerator
         @doc = REXML::Document.new
         @doc << REXML::XMLDecl.new('1.0', 'UTF-8')
 
-        
-
         package = REXML::Element.new('package')
         package.add_attribute("unique-identifier", "uid")
         @doc.add_element(package)
 
         package = package_node()
         metadata_node(package)
+        manifest_node(package)
+    end
 
+    # StringIOでXMLを出力
+    # @return [StringIO] StringIOのXML
+    def write_string
+        xos = StnigIO.new 
+        @doc.write(xos, indent=2)
+        xos
+    end
+
+    # ファイルでXMLを出力
+    # @param [String] 書き出すパス
+    def write_file(path)
+        File.open(path, "w") do |file|
+            @doc.write(file, indent=2)
+        end
     end
 end
