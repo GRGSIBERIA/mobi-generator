@@ -8,4 +8,6 @@ module RubyParser
             "<ruby>#{kana}<rp>(</rp><rt>#{ruby}</rt><rp>)</rp></ruby>"
         end
     end
+
+    module_function :parse
 end
