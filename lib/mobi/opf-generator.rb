@@ -2,6 +2,8 @@
 require 'rexml/document'
 require 'date'
 require 'stringio'
+require 'rdiscount'
+require 'nkf'
 
 #
 # OPFファイルを作成するクラス
@@ -40,14 +42,34 @@ class OpfGenerator < XmlGenerator
                 id: File.basename(file.path, ".*")
             }
 
-            case File.extname(file.path).downcase
+            # 文字ファイルの場合はUTF8へ強制的に変換する
+            extname = File.extname(file.path).downcase
+            string = enforce_convert_to_utf8(extname, file.stream)
+
+            case extname
             when ".jpg", ".jpeg"
                 parts[:media_type] = "image/jpeg"
             when ".png"
                 # png -> jpg
+
+                # NOTICE:
+                # 変換コードをここに書く
+
+                parts[:media_type] = "image/jpeg"
             when ".md", ".txt", ".text"
                 # markdown -> html
+
+                # NOTICE:
+                # {{漢字|振り仮名}} -> <ruby>漢字<rp>(</rp><rt>振り仮名</rt><rp>)</rp></ruby>
+
+                markdown = RDiscount.new(string)
+                html = markdown.to_html
+                file.set_stream(html)   # 
+
+                parts[:media_type] = "text/x-oeb1-document"
             when ".html", ".htm"
+                file.set_stream(string)
+
                 parts[:media_type] = "text/x-oeb1-document"
             when ".css"
                 parts[:media_type] = "text/x-oeb1-css"

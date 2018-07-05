@@ -17,4 +17,24 @@ class XmlGenerator
         parent.add_element(elem)
         elem
     end
+
+    def enforce_convert_to_utf8(extname, stream)
+        string = nil
+        case extname
+        when ".md", ".txt", ".text", ".html", ".htm", ".css"
+            string = stream.string 
+            encoding = NKF.guess(string)
+            unless encoding == NKF::UTF8 then
+                case encoding 
+                when NKF::SJIS
+                    string = NKF.nkf('-w -S')
+                when NKF::JIS 
+                    string = NKF.nkf('-w -J')
+                when NKF::EUC
+                    string = NKF.nkf('-w -E')
+                end
+            end
+        end
+        string
+    end
 end

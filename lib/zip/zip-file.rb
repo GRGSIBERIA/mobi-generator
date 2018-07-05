@@ -1,4 +1,5 @@
 #-*- encoding: utf-8
+require "stringio"
 
 #
 # Zipファイルの対応
@@ -13,5 +14,12 @@ class ZipFile
     def initialize(path, stream)
         @path = path 
         @stream = stream
+    end
+
+    def set_stream(data)
+        unless data.nil? then
+            @stream.close
+            @stream = StringIO.new(data)
+        end
     end
 end
