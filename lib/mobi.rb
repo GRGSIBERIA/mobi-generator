@@ -6,4 +6,5 @@ require "zip/zip-extractor"
 
 require "mobi/xml-generator"
 require "mobi/ruby-parser"
+require "mobi/mathml-parser"
 require "mobi/opf-generator"
