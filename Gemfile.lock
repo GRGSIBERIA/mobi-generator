@@ -2,12 +2,14 @@ GEM
   remote: https://rubygems.org/
   specs:
     rdiscount (2.2.0.1)
+    texmath-ruby (0.0.2)
 
 PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
   rdiscount
+  texmath-ruby
 
 BUNDLED WITH
    1.16.2
