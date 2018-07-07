@@ -58,13 +58,10 @@ class OpfGenerator < XmlGenerator
                 parts[:media_type] = "image/jpeg"
             when ".md", ".txt", ".text"
                 # markdown -> html
-
-                # NOTICE:
-                # {{漢字|振り仮名}} -> <ruby>漢字<rp>(</rp><rt>振り仮名</rt><rp>)</rp></ruby>
-
                 markdown = RDiscount.new(string)
                 html = markdown.to_html
-                file.set_stream(html)   # 
+                parsed = RubyParser.parse(html))   # ふりがなをHTMLに変換
+                file.set_stream(parsed)
 
                 parts[:media_type] = "text/x-oeb1-document"
             when ".html", ".htm"

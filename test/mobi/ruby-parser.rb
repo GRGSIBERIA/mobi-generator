@@ -25,4 +25,10 @@ class RubyParserTest < Minitest::Test
         rep = RubyParser.parse(str)
         assert_equal rep, "aaa <ruby>漢字<rp>(</rp><rt>振り仮名</rt><rp>)</rp></ruby> bbb <ruby>漢字<rp>(</rp><rt>振り仮名</rt><rp>)</rp></ruby> ccc <ruby>漢字<rp>(</rp><rt>振り仮名</rt><rp>)</rp></ruby>"
     end
+
+    def test_parse_into_kanji
+        str = "aaa {{漢字|振り仮名}} 適当 {{漢字|振り仮名}} ccc {{漢字|振り仮名}}"
+        rep = RubyParser.parse(str)
+        assert_equal rep, "aaa <ruby>漢字<rp>(</rp><rt>振り仮名</rt><rp>)</rp></ruby> 適当 <ruby>漢字<rp>(</rp><rt>振り仮名</rt><rp>)</rp></ruby> ccc <ruby>漢字<rp>(</rp><rt>振り仮名</rt><rp>)</rp></ruby>"
+    end
 end
