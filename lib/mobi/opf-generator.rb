@@ -51,25 +51,32 @@ class OpfGenerator < XmlGenerator
                 parts[:media_type] = "image/jpeg"
             when ".png"
                 # png -> jpg
-
                 # NOTICE:
                 # 変換コードをここに書く
-
                 parts[:media_type] = "image/jpeg"
+
             when ".md", ".txt", ".text"
                 # markdown -> html
                 markdown = RDiscount.new(string)
                 html = markdown.to_html
-                parsed = RubyParser.parse(html))   # ふりがなをHTMLに変換
-                file.set_stream(parsed)
 
+                # LaTeXでRubyがマッチする可能性があるので，MathMLからレンダリングする．
+                mathed = MathML.parse(html)
+                unless mathed == html then 
+                    parts[:properties] = "mathml"
+                end
+                rubied = RubyParser.parse(mathed)
+
+                file.set_stream(rubied)
                 parts[:media_type] = "text/x-oeb1-document"
+
             when ".html", ".htm"
                 file.set_stream(string)
-
                 parts[:media_type] = "text/x-oeb1-document"
+
             when ".css"
                 parts[:media_type] = "text/x-oeb1-css"
+
             when ".ttf"
                 parts[:media_type] = "application/x-font-ttf"
             end 
