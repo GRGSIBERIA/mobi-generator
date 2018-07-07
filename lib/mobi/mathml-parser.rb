@@ -15,4 +15,6 @@ module MathML
             clean_as_convert(match, "{{$$, }}")
         end
     end
+
+    module_function :parse
 end
