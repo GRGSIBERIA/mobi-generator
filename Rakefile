@@ -1,12 +1,8 @@
-require "rake/testtask"
+require "rake"
+require "bundler/gem_tasks"
 
 task default: :test
 
-#task :test do 
-#    ruby "./test/minitest.rb"
-#end
-
-Rake::TestTask.new(:test) do |t|
-    t.libs << "lib" << "test"
+task :test do     
     ruby "./test/minitest.rb"
 end
