@@ -16,10 +16,12 @@ class ZipFile
         @stream = stream
     end
 
-    def set_stream(data)
+    # 新しいデータを設定する
+    # @param [String] string 文字列データ
+    def set_stream(string)
         unless data.nil? then
             @stream.close
-            @stream = StringIO.new(data)
+            @stream = StringIO.new(string)
         end
     end
 end

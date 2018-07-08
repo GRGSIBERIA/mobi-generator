@@ -9,6 +9,8 @@ require 'nkf'
 # OPFファイルを作成するクラス
 #
 class OpfGenerator < XmlGenerator
+    private :package_node, :metadata_node, :manifest_node
+
     def package_node()
         package = add_node(@doc, "package", nil, {
             unique_identifier: "uid"
@@ -16,14 +18,16 @@ class OpfGenerator < XmlGenerator
     end
 
     def metadata_node(package)
-        meta = add_node(package, "metadata")
+        meta = add_node(package, "metadata", nil, {
+            xmlns__dc: "http://purl.org/dc/elements/1.1/"
+        })
 
         dcmeta = add_node(meta, "dc-metadata")
-        add_node(dcmeta, "dc__Title", @data[:title])
-        add_node(dcmeta, "dc__Language", "en-us")
-        add_node(dcmeta, "dc__Creator", @data[:creator])
-        add_node(dcmeta, "dc__Description", @data[:description])
-        add_node(dcmeta, "dc__Date", Date.today.strftime("%d/%m/%Y"))
+        add_node(dcmeta, :dc__Title, @data[:title])
+        add_node(dcmeta, :dc__Language, "en-us")
+        add_node(dcmeta, :dc__Creator, @data[:creator])
+        add_node(dcmeta, :dc__Description, @data[:description])
+        add_node(dcmeta, :dc__Date, Date.today.strftime("%d/%m/%Y"))
 
         xmeta = add_node(meta, "x-metadata")
         add_node(xmeta, "output", nil, {
@@ -63,9 +67,9 @@ class OpfGenerator < XmlGenerator
                 # LaTeXでRubyがマッチする可能性があるので，MathMLからレンダリングする．
                 mathed = MathML.parse(html)
                 unless mathed == html then 
-                    parts[:properties] = "mathml"
+                    parts[:properties] = "mathml"   # MathMLが存在するならproperties属性にmathmlを追加しなければならない
                 end
-                rubied = RubyParser.parse(mathed)
+                rubied = RubyParser.parse(mathed)   # {kana|furi}的な記法がLaTeXでは存在し得る
 
                 file.set_stream(rubied)
                 parts[:media_type] = "text/x-oeb1-document"
@@ -75,12 +79,14 @@ class OpfGenerator < XmlGenerator
                 parts[:media_type] = "text/x-oeb1-document"
 
             when ".css"
+                file.set_stream(string)
                 parts[:media_type] = "text/x-oeb1-css"
 
             when ".ttf"
                 parts[:media_type] = "application/x-font-ttf"
             end 
 
+            # media_typeが存在しなければスルー
             unless parts[:media_type].nil?
                 add_node(manifest, "item", nil, parts)
             end
@@ -89,11 +95,11 @@ class OpfGenerator < XmlGenerator
 
     # OPFファイルの作成
     # @param [Hash] data ファイルの作成に必要なデータ一式
-    # @option data [Symbol] :title タイトル
-    # @option data [Symbol] :creator 作成者
-    # @option data [Symbol] :publisher 出版社
-    # @option data [Symbol] :description 書籍の概要
-    # @option data [Symbol] :files ファイルの配列
+    # @option data [String] :title タイトル
+    # @option data [String] :creator 作成者
+    # @option data [String] :publisher 出版社
+    # @option data [String] :description 書籍の概要
+    # @option data [Array<ZipFile>] :files ファイルの配列
     def initialize(data)
         @data = data 
         @doc = REXML::Document.new
@@ -110,7 +116,7 @@ class OpfGenerator < XmlGenerator
 
     # StringIOでXMLを出力
     # @return [StringIO] StringIOのXML
-    def write_string
+    def write_stringio
         xos = StnigIO.new 
         @doc.write(xos, indent=2)
         xos
