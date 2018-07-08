@@ -1,9 +1,10 @@
 #-*- encoding: utf-8
 
 #
-# Packageノード
+# packageノード
 #
 class PackageNode < NodeBase
+    # packageノード
     def initialize
         super("package", nil, {
             "unique-identifier" => "uid"

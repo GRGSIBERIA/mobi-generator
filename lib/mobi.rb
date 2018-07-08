@@ -4,7 +4,8 @@ require "zip/zip-file"
 require "zip/zip-archiver"
 require "zip/zip-extractor"
 
-require "mobi/xml-generator"
-require "mobi/ruby-parser"
-require "mobi/mathml-parser"
-require "mobi/opf-generator"
+require "mobi/parser/ruby-parser"
+require "mobi/parser/mathml-parser"
+
+require "mobi/opf/node-base.rb"
+require "mobi/opf/package-node.rb"

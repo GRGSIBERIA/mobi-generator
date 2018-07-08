@@ -1,5 +1,5 @@
 #-*- encoding: utf-8
-require "./lib/mobi/node-base"
+require "./lib/mobi/opf/node-base"
 
 class NodeBaseTest < Minitest::Test
     def test_new
