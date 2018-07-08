@@ -12,7 +12,7 @@ class NodeBase
     # @param [String] text 要素のテキスト
     # @param [Hash] attrs 要素の属性，String, [Any.to_s]で動作が保証される
     def initialize(node_name, text=nil, attrs=nil)
-        @node = REXML::Element(node_name)
+        @node = REXML::Element.new(node_name)
         unless text.nil? then
             @node.add_text(text)
         end

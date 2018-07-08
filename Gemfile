@@ -6,6 +6,8 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
 # gem "rails"
 gem 'rdiscount'
+gem 'rake'
+gem 'bundle'
 
 # Haskelのインストールが必要
 # cabal update
