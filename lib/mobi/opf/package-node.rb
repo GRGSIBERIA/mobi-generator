@@ -3,12 +3,12 @@
 module Mobi
     module OPF
         #
-        # packageノード
+        # packageノード，OPFのルートノード
         #
         class PackageNode < NodeBase
-            # packageノード
+            # packageノード，OPFのルートノード
             def initialize
-                super("package", nil, {
+                super(nil, "package", nil, {
                     "unique-identifier" => "uid"
                 })
             end

@@ -8,10 +8,10 @@ class PackageNodeTest < Minitest::Test
     def test_new
         n = PackageNode.new
         assert_equal n.kind_of?(NodeBase), true
+        assert_equal n.node.name, "package"
     end
 
-    def test_nodename
-        n = PackageNode.new 
-        assert_equal n.node.name, "package"
+    def test_derive
+        n = PackageNode.new
     end
 end

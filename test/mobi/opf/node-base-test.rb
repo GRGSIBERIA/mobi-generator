@@ -3,19 +3,19 @@ require "./lib/mobi/opf/node-base"
 
 class NodeBaseTest < Minitest::Test
     include Mobi::OPF
-    
+
     def test_new
-        n = NodeBase.new("package")
+        n = NodeBase.new(nil, "package")
         assert_equal n.node.name, "package"
     end
 
     def test_text
-        n = NodeBase.new("package", "text")
+        n = NodeBase.new(nil, "package", "text")
         assert_equal n.node.get_text, "text"
     end
 
     def test_attributes
-        n = NodeBase.new("package", "text", {
+        n = NodeBase.new(nil, "package", "text", {
             "a" => "yamada",
             "b" => "ueda"
         })
