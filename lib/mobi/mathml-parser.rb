@@ -14,12 +14,12 @@ module MathML
     # 対象の文字列の文字列群から特定の記号を探索し，該当部分をMathMLに変換する
     # @param [String] string MathMLに変換する対象の文字列，{$～$}がインライン要素，{{$～$}}がブロック要素
     def parse(string)
-        # ブロック要素の場合は特に変更しない
+        # ブロック要素を先に走査するのは，記法的にインライン要素が先にマッチするため
         block = string.gsub(/\{\{\$(.*)\$\}\}/) do |match|
             clean_as_convert(match, "{{$", "$}}")
         end
 
-        # デフォルトではブロック要素で出力される
+        # インライン要素にヒットしたら変換する
         inline = block.gsub(/\{\$(.*)\$\}/) do |match|
             clean_as_convert(match, "{$", "$}").gsub(%Q{<math display="block"}, %Q{<math display="inline"})
         end
