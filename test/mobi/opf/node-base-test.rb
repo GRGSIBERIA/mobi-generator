@@ -2,6 +2,8 @@
 require "./lib/mobi/opf/node-base"
 
 class NodeBaseTest < Minitest::Test
+    include Mobi::OPF
+    
     def test_new
         n = NodeBase.new("package")
         assert_equal n.node.name, "package"
