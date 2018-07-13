@@ -1,4 +1,4 @@
-require "./lib/mobi/parser/mathml"
+require "./lib/mobi"
 
 class RubyParserTest < Minitest::Test
     def test_run

@@ -1,6 +1,6 @@
 #-*- encoding: utf-8
-require "./lib/mobi/opf/metadata-node"
-require "./lib/mobi/opf/package-node"
+require "./lib/mobi"
+require "./lib/mobi"
 
 class MetadataNodeTest < Minitest::Test
     include Mobi::OPF
@@ -16,6 +16,6 @@ class MetadataNodeTest < Minitest::Test
     end
     
     def test_new
-
+        
     end
 end

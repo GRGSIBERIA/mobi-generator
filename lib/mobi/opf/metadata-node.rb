@@ -20,28 +20,35 @@ module Mobi
                 })
 
                 # dcmeta
-                @publisher = "玖理刻文通株式会社"
-                @dcmeta = NodeBase.new(self, "dc-metadata")
-                NodeBase.new(@dcmeta, "dc:title", data[:title])
-                NodeBase.new(@dcmeta, "dc:language", "en-us")
-                NodeBase.new(@dcmeta, "dc:publisher", @publisher)
-                generate_list(@dcmeta, "dc:creator", data[:creator], true)
-                generate_list(@dcmeta, "dc:contributor", data[:contributor])
-                NodeBase.new(@dcmeta, "dc:description", data[:description])
-                NodeBase.new(@dcmeta, "dc:date", Date.today.strftime("%d/%m/%Y"))
+                generate_dcmeta(data)
+                generate_xmeta(data)
+            end
+
+            private
+            def generate_dcmeta(data)
+                publisher = "玖理刻文通株式会社"
+                dcmeta = NodeBase.new(self, "dc-metadata")
+                NodeBase.new(dcmeta, "dc:title", data[:title])
+                NodeBase.new(dcmeta, "dc:language", "en-us")
+                NodeBase.new(dcmeta, "dc:publisher", publisher)
+                generate_list(dcmeta, "dc:creator", data[:creator], true)
+                generate_list(dcmeta, "dc:contributor", data[:contributor])
+                NodeBase.new(dcmeta, "dc:description", data[:description])
+                NodeBase.new(dcmeta, "dc:date", Date.today.strftime("%d/%m/%Y"))
 
                 # IDの発行
-                seed = @publisher + data[:title] + data[creator]
-                identifier = Digest::SHA512.hexdigest(@publisher + data[:title] + data[creator])
-                NodeBase.new(@dcmeta, "dc:identifier", identifier)
-                
-                # xmeta
-                @xmeta = NodeBase.new(self, "x-metadata")
-                NodeBase.new(@xmeta, "output", nil {
+                seed = publisher + data[:title] + data[creator]
+                identifier = Digest::SHA512.hexdigest(publisher + data[:title] + data[:creator])
+                NodeBase.new(dcmeta, "dc:identifier", identifier)
+            end
+
+            def generate_xmeta(data)
+                xmeta = NodeBase.new(self, "x-metadata")
+                NodeBase.new(xmeta, "output", nil {
                     "encoding" => "utf-8",
                     "content-type" => "text/x-oeb1-document"
                 })
-                NodeBase.new(@xmeta, "EmbeddedCover", "cover.jpg")
+                NodeBase.new(xmeta, "EmbeddedCover", "cover.jpg")
             end
         end
     end

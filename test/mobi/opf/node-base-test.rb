@@ -1,5 +1,5 @@
 #-*- encoding: utf-8
-require "./lib/mobi/opf/node-base"
+require "./lib/mobi"
 
 class NodeBaseTest < Minitest::Test
     include Mobi::OPF
