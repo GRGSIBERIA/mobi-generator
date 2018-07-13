@@ -1,6 +1,4 @@
 #-*- encoding: utf-8
-require "./lib/mobi"
-require "./lib/mobi"
 
 class MetadataNodeTest < Minitest::Test
     include Mobi::OPF
@@ -8,9 +6,9 @@ class MetadataNodeTest < Minitest::Test
     def setup
         @p = PackageNode.new
         @n = MetadataNode.new(@p, {
-            title: "タイトル"
+            title: "タイトル",
             creator: ["著者1", "著者2"],
-            contributor: ["協力者1", "協力者2"]
+            contributor: ["協力者1", "協力者2"],
             description: "概要"
         })
     end

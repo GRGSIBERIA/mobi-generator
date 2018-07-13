@@ -22,12 +22,12 @@ module Mobi
             def initialize(parent, node_name, text=nil, attrs=nil)
                 if parent.nil? then 
                     @doc = REXML::Document.new("<#{node_name}/>")
-                    @node = @doc.root
+                    @node = REXML::Element.new(node_name)
+                    @doc.root.add_element(@node)
                 else
                     @node = REXML::Element.new(node_name)
                     if parent.kind_of?(NodeBase) then 
                         parent.node.add_element(@node)
-                        @doc = parent.doc
                     end
                 end
 

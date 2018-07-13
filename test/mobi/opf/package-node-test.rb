@@ -1,5 +1,4 @@
 #-*- encoding: utf-8
-require "./lib/mobi"
 
 class PackageNodeTest < Minitest::Test
     include Mobi::OPF

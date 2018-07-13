@@ -1,5 +1,6 @@
 #-*- encoding: utf-8
 require "digest/sha2"
+require "date"
 
 module Mobi
     module OPF
@@ -44,7 +45,7 @@ module Mobi
 
             def generate_xmeta(data)
                 xmeta = NodeBase.new(self, "x-metadata")
-                NodeBase.new(xmeta, "output", nil {
+                NodeBase.new(xmeta, "output", nil, {
                     "encoding" => "utf-8",
                     "content-type" => "text/x-oeb1-document"
                 })

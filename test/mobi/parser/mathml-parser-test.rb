@@ -1,4 +1,4 @@
-require "./lib/mobi"
+#-*- encoding: utf-8
 
 class RubyParserTest < Minitest::Test
     def test_run
