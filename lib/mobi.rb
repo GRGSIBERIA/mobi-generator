@@ -7,5 +7,6 @@ require "zip/zip-extractor"
 require "mobi/parser/ruby-parser"
 require "mobi/parser/mathml-parser"
 
+require "mobi/opf/errors.rb"
 require "mobi/opf/node-base.rb"
 require "mobi/opf/package-node.rb"

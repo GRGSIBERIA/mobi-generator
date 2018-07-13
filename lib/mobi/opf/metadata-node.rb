@@ -1,4 +1,5 @@
 #-*- encoding: utf-8
+require "digest/sha2"
 
 module Mobi
     module OPF
@@ -9,21 +10,30 @@ module Mobi
             # Metadataノード
             # @param [PackageNode] 親ノード
             # @param [Hash] data 必要なデータ
-            # @option data [String] :title
-            # @option data [String] :creator
-            # @option data [String] :description
+            # @option data [String] :title タイトル, required
+            # @option data [String, Array<String>] :creator 著者もしくは連名著者, required
+            # @option data [String] :description 概要, required
+            # @option data [String, Array<String>] :contributor
             def initialize(package, data)
-                super("metadata", nil, {
+                super(package, "metadata", nil, {
                     "xmlns:dc" => "http://purl.org/dc/elements/1.1/"
                 })
 
                 # dcmeta
+                @publisher = "玖理刻文通株式会社"
                 @dcmeta = NodeBase.new(self, "dc-metadata")
-                NodeBase.new(@dcmeta, "dc:Title", data[:title])
-                NodeBase.new(@dcmeta, "dc:Language", "en-us")
-                NodeBase.new(@dcmeta, "dc:Creator", data[:creator])
-                NodeBase.new(@dcmeta, "dc:Description", data[:description])
-                NodeBase.new(@dcmeta, "dc:Date", Date.today.strftime("%d/%m/%Y"))
+                NodeBase.new(@dcmeta, "dc:title", data[:title])
+                NodeBase.new(@dcmeta, "dc:language", "en-us")
+                NodeBase.new(@dcmeta, "dc:publisher", @publisher)
+                generate_list(@dcmeta, "dc:creator", data[:creator], true)
+                generate_list(@dcmeta, "dc:contributor", data[:contributor])
+                NodeBase.new(@dcmeta, "dc:description", data[:description])
+                NodeBase.new(@dcmeta, "dc:date", Date.today.strftime("%d/%m/%Y"))
+
+                # IDの発行
+                seed = @publisher + data[:title] + data[creator]
+                identifier = Digest::SHA512.hexdigest(@publisher + data[:title] + data[creator])
+                NodeBase.new(@dcmeta, "dc:identifier", identifier)
                 
                 # xmeta
                 @xmeta = NodeBase.new(self, "x-metadata")
