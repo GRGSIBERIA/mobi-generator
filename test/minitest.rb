@@ -14,6 +14,8 @@ require "./lib/mobi/opf/metadata-node"
 
 # テスト本体
 require "./test/mobi/parser/ruby-parser-test"
+
+# texmathの実行ファイルにパスが通ってないと
 require "./test/mobi/parser/mathml-parser-test"
 
 require "./test/mobi/opf/node-base-test"

@@ -19,27 +19,31 @@ module Mobi
                 super(package, "metadata", nil, {
                     "xmlns:dc" => "http://purl.org/dc/elements/1.1/"
                 })
+                @publisher = "玖理刻文通株式会社"
 
                 # dcmeta
                 generate_dcmeta(data)
                 generate_xmeta(data)
             end
 
+            def generate_id(data)
+                creator = data[:creator].is_a?(Array) ? data[:creator].join(",") : data[:creator]
+                identifier = Digest::SHA512.hexdigest(@publisher + data[:title] + creator)
+            end
+
             private
             def generate_dcmeta(data)
-                publisher = "玖理刻文通株式会社"
                 dcmeta = NodeBase.new(self, "dc-metadata")
                 NodeBase.new(dcmeta, "dc:title", data[:title])
                 NodeBase.new(dcmeta, "dc:language", "en-us")
-                NodeBase.new(dcmeta, "dc:publisher", publisher)
+                NodeBase.new(dcmeta, "dc:publisher", @publisher)
                 generate_list(dcmeta, "dc:creator", data[:creator], true)
                 generate_list(dcmeta, "dc:contributor", data[:contributor])
                 NodeBase.new(dcmeta, "dc:description", data[:description])
                 NodeBase.new(dcmeta, "dc:date", Date.today.strftime("%d/%m/%Y"))
 
                 # IDの発行
-                seed = publisher + data[:title] + data[creator]
-                identifier = Digest::SHA512.hexdigest(publisher + data[:title] + data[:creator])
+                identifier = generate_id(data)
                 NodeBase.new(dcmeta, "dc:identifier", identifier)
             end
 
