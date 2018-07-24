@@ -12,7 +12,7 @@ module Mobi
             # @return [String] ファイルのパス
             attr_reader :path
 
-            # @return [String] id属性
+            # @return [String] id属性, ディレクトリを"_"に置き換えたbasename
             attr_reader :id
 
             # @return [String] ファイルの拡張子
@@ -26,7 +26,7 @@ module Mobi
             def initialize(manifest, filepath)
                 @path = filepath
                 @ext = File.extname(filepath)
-                @id = filepath.gsub(/[\/|\\]/, "_")
+                @id = File.basename(filepath.gsub(/[\/|\\]/, "_"))
 
                 case @ext.downcase
                 when ".jpg", ".jpeg"
@@ -48,15 +48,28 @@ module Mobi
             end
 
             # @param manifest [Mobi::OPF::ManifestNode] マニフェストノード
+            # @return [Mobi::OPF::NodeBase] item要素
             def generate_node(manifest)
-                if manifest.name != "manifest"
+                if manifest.name != "manifest" then
                     throw DontMatchParentError
                 end
 
-                return NodeBase.new(manifest, "item", {
+                return NodeBase.new(manifest, "item", nil, {
                     "href" => @path,
                     "id" => @id,
                     "media_type" => @media_type
+                })
+            end
+
+            # @param spine [Mobi::OPF::SpineNode] データ列ノード
+            # @return [Mobi::OPF::NodeBase] itemref要素
+            def generate_itemref(spine)
+                if spine.name != "spine" then 
+                    throw DontMatchParentError 
+                end
+
+                return NodeBase.new(spine, "itemref", nil, {
+                    "idref" => @id
                 })
             end
         end

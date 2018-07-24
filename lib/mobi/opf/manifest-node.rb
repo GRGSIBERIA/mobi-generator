@@ -8,25 +8,21 @@ module Mobi
         class ManifestNode < NodeBase
             # Manifestノード
             # @param [PackageNode] package
-            # @param [Hash] data
-            # @option data [Hash] :items ZIP中に存在しているファイル関係
-            def initialize(package, data)
+            # @param [Array<Mobi::OPF::ItemNode>] items 事前に作成されたデータ，item, itemref要素で使用する
+            def initialize(package, items)
                 super(package, "manifest")
 
-                @items = expand_items(data)
+                expand_items(items)
             end
 
             private
-            def expand_items(data)
-                items = []
-                for item in data[:items]
-                    node = ItemNode.new(item[:filepath])
-                    unless node.is_dir? then
-                        items << node
-                        node.generate_node(self)    # ディレクトリ以外はitem要素として追加し続ける
+            # 有効なデータに対してディレクトリかどうか精査し，追加可能なオブジェクトか判断する
+            def expand_items(items)
+                for item in items
+                    unless item.is_dir? then
+                        item.generate_node(self)    # ディレクトリ以外はitem要素として追加し続ける
                     end
                 end
-                return items
             end
         end 
     end
