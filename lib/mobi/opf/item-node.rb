@@ -21,34 +21,43 @@ module Mobi
             # @return [String] mime-type
             attr_reader :media_type
 
-            # @return [StringIO] ファイルコンテンツ
-            attr_reader :contents
-            
             # アイテム用のノード
             # @param filepath [String] ZIPファイル上のパス
-            # @param content [StringIO] ファイルの実体
-            def initialize(filepath, content)
+            def initialize(manifest, filepath)
                 @path = filepath
                 @ext = File.extname(filepath)
                 @id = filepath.gsub(/[\/|\\]/, "_")
-                @content = content
 
                 case @ext.downcase
                 when ".jpg", ".jpeg"
                     @media_type = "image/jpeg"
                 when ".png"
                     @media_type = "image/png"
-                when ".htm", ".html"
+                when ".htm", ".html", ".md"
                     @media_type = "text/x-oeb1-document"
                 when ".md"
                     @media_type = "text/x-oeb1-document"
-                    
+                when ".css"
+                    @media_type = "text/css"
                 end
             end
 
             # @return [Boolean] ディレクトリかどうか
             def is_dir?
                 return @ext == "" and File.directory?(@path)
+            end
+
+            # @param manifest [Mobi::OPF::ManifestNode] マニフェストノード
+            def generate_node(manifest)
+                if manifest.name != "manifest"
+                    throw DontMatchParentError
+                end
+
+                return NodeBase.new(manifest, "item", {
+                    "href" => @path,
+                    "id" => @id,
+                    "media_type" => @media_type
+                })
             end
         end
     end

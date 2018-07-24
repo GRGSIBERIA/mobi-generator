@@ -13,13 +13,20 @@ module Mobi
             def initialize(package, data)
                 super(package, "manifest")
 
+                @items = expand_items(data)
             end
 
             private
             def expand_items(data)
+                items = []
                 for item in data[:items]
-                    ItemNode.new(item[:filepath], item[:contents])
+                    node = ItemNode.new(item[:filepath])
+                    unless node.is_dir? then
+                        items << node
+                        node.generate_node(self)    # ディレクトリ以外はitem要素として追加し続ける
+                    end
                 end
+                return items
             end
         end 
     end
