@@ -23,9 +23,10 @@ module Mobi
 
             # アイテム用のノード
             # @param filepath [String] ZIPファイル上のパス
-            def initialize(manifest, filepath)
+            def initialize(filepath)
                 @path = filepath
                 @ext = File.extname(filepath)
+                @basename = File.basename(filepath)
                 @id = File.basename(filepath.gsub(/[\/|\\]/, "_"))
 
                 case @ext.downcase
@@ -44,7 +45,9 @@ module Mobi
 
             # @return [Boolean] ディレクトリかどうか
             def is_dir?
-                return @ext == "" and File.directory?(@path)
+                # /.bashrc のようなケースはディレクトリではない
+                # /img のようなケースは拡張子がないのでディレクトリと判断する
+                return (@basename != "" and @ext == "")
             end
 
             # @param manifest [Mobi::OPF::ManifestNode] マニフェストノード

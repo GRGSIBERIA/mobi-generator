@@ -27,7 +27,7 @@ module Mobi
                 TeXMath.convert(clean, from: :tex, to: :mathml)
             end
 
-            module_function :parse
+            module_function :parse, :clean_as_convert
         end
     end
 end

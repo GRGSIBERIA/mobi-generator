@@ -8,6 +8,7 @@ require "./lib/mobi/parser/mathml"
 require "./lib/mobi/opf/errors"
 require "./lib/mobi/opf/node-base"
 require "./lib/mobi/opf/package-node"
+require "./lib/mobi/opf/item-node"
 require "./lib/mobi/opf/metadata-node"
 require "./lib/mobi/opf/manifest-node"
 
@@ -18,6 +19,8 @@ require "./test/mobi/parser/ruby-parser-test"
 # texmathの実行ファイルにパスが通ってないとダメ
 require "./test/mobi/parser/mathml-parser-test"
 
+
 require "./test/mobi/opf/node-base-test"
 require "./test/mobi/opf/package-node-test"
 require "./test/mobi/opf/metadata-node-test"
+require "./test/mobi/opf/item-node-test"
