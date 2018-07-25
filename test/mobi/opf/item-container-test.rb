@@ -1,13 +1,17 @@
 #-*- encoding: utf-8
 
-class ItemNodeTest < Minitest::Test
+class ItemContainerTest < Minitest::Test
     include Mobi::OPF
 
     def setup
-        @node = ItemNode.new("./test.html")
-        @dir = ItemNode.new("/img")
-        @dired = ItemNode.new("./img/hoge.jpg")
-        @root = ItemNode.new("./")
+        @node = ItemContainer.new("./test.html")
+        @dir = ItemContainer.new("/img")
+        @dired = ItemContainer.new("./img/hoge.jpg")
+        @root = ItemContainer.new("./")
+        @items = [@node, @dir, @dired, @root]
+
+        @package = PackageNode.new
+        @manifest = ManifestNode.new(@package, @items)
     end
 
     def test_ext
@@ -22,5 +26,9 @@ class ItemNodeTest < Minitest::Test
         assert_equal @dir.is_dir?, true
         assert_equal @dired.is_dir?, false
         assert_equal @root.is_dir?, true
+    end
+
+    def test_generate_item
+        @node.generate_item(@manifest)
     end
 end

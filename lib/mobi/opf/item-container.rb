@@ -4,9 +4,10 @@ require 'rdiscount'
 module Mobi
     module OPF
         #
-        # Itemノード
+        # Itemコンテナ
+        # NodeBaseは継承しない
         #
-        class ItemNode
+        class ItemContainer
             include Mobi::Parser
 
             # @return [String] ファイルのパス
@@ -50,9 +51,10 @@ module Mobi
                 return (@basename != "" and @ext == "")
             end
 
+            # itemノードを生成する
             # @param manifest [Mobi::OPF::ManifestNode] マニフェストノード
             # @return [Mobi::OPF::NodeBase] item要素
-            def generate_node(manifest)
+            def generate_item(manifest)
                 if manifest.name != "manifest" then
                     throw DontMatchParentError
                 end
@@ -64,6 +66,7 @@ module Mobi
                 })
             end
 
+            # itemrefノードを生成する
             # @param spine [Mobi::OPF::SpineNode] データ列ノード
             # @return [Mobi::OPF::NodeBase] itemref要素
             def generate_itemref(spine)

@@ -44,6 +44,11 @@ module Mobi
                 end
             end
 
+            # @return [String] 要素名
+            def name
+                return @node.name
+            end
+
             protected
             def generate_list(adapter, name, list, required=false, has_id=false)
                 # required=true list=nil の場合はエラーが発生する

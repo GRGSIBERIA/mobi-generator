@@ -6,11 +6,15 @@ module Mobi
         # Manifestノード
         #
         class ManifestNode < NodeBase
+            # @return [Array<Mobi::OPF::ItemContainer>] ItemContainerのインスタンスを返却する
+            attr_reader :items
+
             # Manifestノード
             # @param [PackageNode] package
-            # @param [Array<Mobi::OPF::ItemNode>] items 事前に作成されたデータ，item, itemref要素で使用する
+            # @param [Array<Mobi::OPF::ItemContainer>] items 事前に作成されたデータ，item, itemref要素で使用する
             def initialize(package, items)
                 super(package, "manifest")
+                @items = items
 
                 expand_items(items)
             end
@@ -20,7 +24,7 @@ module Mobi
             def expand_items(items)
                 for item in items
                     unless item.is_dir? then
-                        item.generate_node(self)    # ディレクトリ以外はitem要素として追加し続ける
+                        item.generate_item(self)    # ディレクトリ以外はitem要素として追加し続ける
                     end
                 end
             end

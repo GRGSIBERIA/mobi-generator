@@ -1,16 +1,13 @@
 #-*- encoding: utf-8
 
-#require "zip/zip-file"
-#require "zip/zip-archiver"
-#require "zip/zip-extractor"
+# 依存性のないファイル
+require "./lib/mobi/parser/ruby"
+require "./lib/mobi/parser/mathml"
+require "./lib/mobi/opf/item-container"
+require "./lib/mobi/opf/errors"
+require "./lib/mobi/opf/node-base"
 
-require "mobi/parser/ruby-parser"
-require "mobi/parser/mathml-parser"
-
-require "mobi/opf/errors"
-require "mobi/opf/node-base"
-
-require "mobi/opf/item-node"
-
-require "mobi/opf/package-node"
-require "mobi/opf/metadata-node"
+# 依存性のあるファイル
+require "./lib/mobi/opf/package-node"
+require "./lib/mobi/opf/metadata-node"
+require "./lib/mobi/opf/manifest-node"
