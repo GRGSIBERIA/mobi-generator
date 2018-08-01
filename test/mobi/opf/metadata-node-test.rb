@@ -14,6 +14,12 @@ class MetadataNodeTest < Minitest::Test
     end
     
     def test_new
+        assert_equal @n.node.name, "metadata"
+        assert_equal @n.node.children[0].name, "dc-metadata"
+        assert_equal @n.node.children[1].name, "x-metadata"
         
+        assert_equal @n.node.children[0].children[0].name, "title"
+        assert_equal @n.node.children[1].children[0].name, "output"
+        assert_equal @n.node.children[1].children[1].name, "EmbeddedCover"
     end
 end
