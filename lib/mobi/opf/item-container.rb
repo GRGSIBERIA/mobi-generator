@@ -35,9 +35,9 @@ module Mobi
                     @media_type = "image/jpeg"
                 when ".png"
                     @media_type = "image/png"
-                when ".htm", ".html", ".md"
+                when ".htm", ".html", ".txt"
                     @media_type = "text/x-oeb1-document"
-                when ".md"
+                when ".md"  # ファイル変換後の情報
                     @media_type = "text/x-oeb1-document"
                 when ".css"
                     @media_type = "text/css"

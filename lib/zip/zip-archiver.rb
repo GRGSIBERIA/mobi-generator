@@ -12,6 +12,15 @@ module Mobi
             # @return [StringIO] 圧縮されたバイナリ
             attr_reader :archived
 
+            # ZipFileの配列を受け取って圧縮する
+            # @param [Array<ZipFile>] files ZipFileのインスタンス配列
+            def initialize(files)
+                out = compress(files)
+                out.rewind
+                @archived = out.read     # archivedには圧縮済みの文字列が入っている
+            end
+
+            # ファイルを圧縮する
             def compress(files)
                 Zip::OutputStream.write_buffer do |zos|
                     for file in files 
@@ -20,14 +29,6 @@ module Mobi
                     end
                     zos.close_buffer
                 end
-            end
-
-            # ZipFileの配列を受け取って圧縮する
-            # @param [Array<ZipFile>] files ZipFileのインスタンス配列
-            def initialize(files)
-                out = compress(files)
-                out.rewind
-                @archived = out.read     # archivedには圧縮済みの文字列が入っている
             end
 
             # @return [String] Base64に変換されたarchived
