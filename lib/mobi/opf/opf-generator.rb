@@ -17,7 +17,8 @@ module Mobi
                 @metadata = MetadataNode.new(@package, data)
                 
                 @itemgen = ItemGenerator.new(data[:pathes])
-                @manifest = ManifestNode.new(@itemgen.items)
+                @manifest = ManifestNode.new(@itemgen.manifest_items)
+                # @spine = SpineNode.new(@itemgen.spine_items)
             end
         end
     end

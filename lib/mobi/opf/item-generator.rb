@@ -4,8 +4,8 @@ module Mobi
     module OPF
         # パスの配列を読み取ってItemContainerの配列を生成するためのジェネレータクラス
         class ItemGenerator
-            # @return [Array<ItemContainer>] 有効なitemのみを返す
-            attr_reader :items 
+            # @return [Array<ItemContainer>] manifestで有効なitemのみを返す
+            attr_reader :manifest_items 
 
             # @return [Array<ItemContainer>] ディレクトリのみを返す
             attr_reader :directories
@@ -22,10 +22,14 @@ module Mobi
             # @return [ItemContainer] toc.ncx
             attr_reader :toc
 
+            # @return [Array<ItemContainer>] spine用のファイルを列挙
+            attr_reader :spine_items
+
             def initialize(pathes)
                 @all = []
-                @items = []
+                @manifest_items = []
                 @directories = []
+                @spine_items = []
 
                 # toc.ncxをここで付加させておく
                 pathes << "toc.ncx"
@@ -36,14 +40,18 @@ module Mobi
                         path = item.path.downcase
                         if path.include?("index.htm") or path.include?("index.html") then 
                             @index = item
-                            @items << item
+                            @manifest_items << item
+                            @spine_items << item
                         elsif path.include?("cover.jpg") or path.include?("cover.jpeg") then 
                             @cover = item 
                         elsif path.include?("toc.ncx") then 
                             @toc = item 
-                            @items << item
+                            @manifest_items << item
+                        elsif path.include?(".htm") or path.include?(".html") then 
+                            @manifest_items << item 
+                            @spine_items << item
                         else 
-                            @items << item 
+                            @manifest_items << item 
                         end
                     else 
                         @directories << item 
