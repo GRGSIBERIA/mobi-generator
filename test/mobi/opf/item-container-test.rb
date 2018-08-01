@@ -29,6 +29,12 @@ class ItemContainerTest < Minitest::Test
     end
 
     def test_generate_item
-        @node.generate_item(@manifest)
+        node = @node.generate_item(@manifest)
+        assert_equal node.name, "item"
+        assert_equal node.node.attribute("id").to_s, "__test_html"
+
+        node = @dired.generate_item(@manifest)
+        assert_equal node.name, "item"
+        assert_equal node.node.attribute("id").to_s, "__img_hoge_jpg"
     end
 end

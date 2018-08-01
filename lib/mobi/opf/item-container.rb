@@ -28,7 +28,7 @@ module Mobi
                 @path = filepath
                 @ext = File.extname(filepath)
                 @basename = File.basename(filepath)
-                @id = File.basename(filepath.gsub(/[\/|\\]/, "_"))
+                @id = File.basename(filepath.gsub(/[\/|\\|\.]/, "_"))
 
                 case @ext.downcase
                 when ".jpg", ".jpeg"
