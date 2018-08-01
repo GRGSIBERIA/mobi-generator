@@ -14,7 +14,7 @@ module Mobi
             # @option data [String] :title タイトル, required
             # @option data [String, Array<String>] :creator 著者もしくは連名著者, required
             # @option data [String] :description 概要, required
-            # @option data [String, Array<String>] :contributor
+            # @option data [String, Array<String>, NilClass] :contributor 貢献者
             def initialize(package, data)
                 super(package, "metadata", nil, {
                     "xmlns:dc" => "http://purl.org/dc/elements/1.1/"
