@@ -42,6 +42,8 @@ module Mobi
                     @media_type = "text/css"
                 when ".ttf"
                     @media_type = "application/x-font-ttf"
+                when ".ncx"
+                    @media_type = "application/x-dtbncx+xml"
                 end
             end
 
