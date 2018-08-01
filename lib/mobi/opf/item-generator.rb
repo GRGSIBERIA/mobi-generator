@@ -13,14 +13,38 @@ module Mobi
             # @return [Array<ItemContainer>] すべてのItemContainerを返す
             attr_reader :all
 
+            # @return [ItemContainer] index.html
+            attr_reader :index
+
+            # @return [ItemContainer] cover.jpg
+            attr_reader :cover
+
+            # @return [ItemContainer] toc.ncx
+            attr_reader :toc
+
             def initialize(pathes)
                 @all = []
                 @items = []
                 @directories = []
+
+                # toc.ncxをここで付加させておく
+                pathes << "toc.ncx"
+
                 for path in pathes 
                     item = ItemContainer.new(path)
                     unless item.is_dir? then
-                        @items << item 
+                        path = item.path.downcase
+                        if path.include?("index.htm") or path.include?("index.html") then 
+                            @index = item
+                            @items << item
+                        elsif path.include?("cover.jpg") or path.include?("cover.jpeg") then 
+                            @cover = item 
+                        elsif path.include?("toc.ncx") then 
+                            @toc = item 
+                            @items << item
+                        else 
+                            @items << item 
+                        end
                     else 
                         @directories << item 
                     end
