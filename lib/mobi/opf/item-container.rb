@@ -40,6 +40,8 @@ module Mobi
                     @media_type = "text/x-oeb1-document"
                 when ".css"
                     @media_type = "text/css"
+                when ".ttf"
+                    @media_type = "application/x-font-ttf"
                 end
             end
 
