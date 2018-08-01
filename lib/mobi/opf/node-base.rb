@@ -22,6 +22,7 @@ module Mobi
             def initialize(parent, node_name, text=nil, attrs=nil)
                 if parent.nil? then 
                     @doc = REXML::Document.new("<#{node_name}/>")
+                    @doc << REXML::XMLDecl.new('1.0', 'UTF-8')
                     @node = REXML::Element.new(node_name)
                     @doc.root.add_element(@node)
                 else

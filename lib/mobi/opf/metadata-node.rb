@@ -26,12 +26,13 @@ module Mobi
                 generate_xmeta(data)
             end
 
+            private
+            # publisher + title + creatorから固有IDを生成する
             def generate_id(data)
                 creator = data[:creator].is_a?(Array) ? data[:creator].join(",") : data[:creator]
                 identifier = Digest::SHA512.hexdigest(@publisher + data[:title] + creator)
             end
 
-            private
             def generate_dcmeta(data)
                 dcmeta = NodeBase.new(self, "dc-metadata")
                 NodeBase.new(dcmeta, "dc:title", data[:title])
