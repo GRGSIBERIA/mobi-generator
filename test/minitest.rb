@@ -1,11 +1,11 @@
 require "minitest/autorun"
 
-#
+#########################################################
 # 依存するライブラリ
 #
 require "zip"
 
-#
+#########################################################
 # テスト対象のロード
 #
 
@@ -18,6 +18,9 @@ require "./lib/mobi/parser/mathml"
 require "./lib/mobi/opf/errors"
 require "./lib/mobi/opf/item-container"
 require "./lib/mobi/opf/node-base"
+
+require "./lib/mobi/zip/mobi-compressor"
+require "./lib/mobi/zip/zip-extractor"
 
 #
 # 依存性のあるファイル
@@ -40,3 +43,6 @@ require "./test/mobi/opf/package-node-test"
 require "./test/mobi/opf/metadata-node-test"
 require "./test/mobi/opf/item-container-test"
 require "./test/mobi/opf/manifest-node-test"
+
+#require "./test/mobi/zip/zip-extractor-test"
+#require "./test/mobi/zip/mobi-compressor-test"

@@ -3,6 +3,7 @@ GEM
   specs:
     rake (12.3.1)
     rdiscount (2.2.0.1)
+    rubyzip (1.2.1)
     texmath-ruby (0.0.2)
 
 PLATFORMS
@@ -11,6 +12,7 @@ PLATFORMS
 DEPENDENCIES
   rake
   rdiscount
+  rubyzip
   texmath-ruby
 
 BUNDLED WITH

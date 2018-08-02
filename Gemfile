@@ -16,3 +16,4 @@ gem 'rake'
 # cabal install texmath -fexecutable --reinstall
 gem 'texmath-ruby'
 gem 'rdiscount'
+gem 'rubyzip'
