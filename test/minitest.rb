@@ -1,6 +1,11 @@
 require "minitest/autorun"
 
 #
+# 依存するライブラリ
+#
+require "zip"
+
+#
 # テスト対象のロード
 #
 

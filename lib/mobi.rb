@@ -1,5 +1,8 @@
 #-*- encoding: utf-8
 
+# 依存するライブラリ
+require "zip"
+
 # 依存性のないファイル
 require "./lib/mobi/parser/ruby"
 require "./lib/mobi/parser/mathml"
