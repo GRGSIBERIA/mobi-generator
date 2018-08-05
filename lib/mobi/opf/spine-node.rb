@@ -22,7 +22,7 @@ module Mobi
 
                 expand_htmls(items) # @itemsと@tocに代入
                 sort_items()        # @itemsをソートする
-
+                record_items()      # @itemsから掲載するファイルを抽出する
             end
 
             private
@@ -52,7 +52,9 @@ module Mobi
                     unless cut =~ /(\d+)$/ then 
                         throw DontHasNumberFromFileError.new 
                     else
-                        return $1.to_i
+                        # パスの中に.*d+-.*d+などの複数桁が複数存在しないという仮定
+                        # 汎用性を持たせたい場合は修正する
+                        return $1.to_i  
                     end
                 else
                     # なぜかディレクトリが混じっているのでエラーを吐いておく
