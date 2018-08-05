@@ -14,7 +14,7 @@ module Mobi
             # @param [Array<Mobi::OPF::ItemContainer>] items 事前に作成されたデータ，item, itemref要素で使用する
             def initialize(package, items)
                 super(package, "manifest")
-                @items = items
+                @items = []
 
                 expand_items(items)
             end
@@ -25,6 +25,7 @@ module Mobi
                 for item in items
                     unless item.is_dir? then
                         item.generate_item(self)    # ディレクトリ以外はitem要素として追加し続ける
+                        @items << item
                     end
                 end
             end

@@ -10,5 +10,11 @@ module Mobi
 
         # 子要素から見て無関係の親要素が存在するときに発生するエラー
         class DontMatchParentError < OPFError; end
+
+        # FileのはずなのにDirectoryになっているときのエラー
+        class HasDirectoryFromFileError < OPFError; end 
+
+        # ファイル名末尾（拡張子を除く）に数値が含まれない場合のエラー
+        class DontHasNumberFromFileError < OPFError; end 
     end
 end

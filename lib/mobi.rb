@@ -14,3 +14,10 @@ require "./lib/mobi/opf/node-base"
 require "./lib/mobi/opf/package-node"
 require "./lib/mobi/opf/metadata-node"
 require "./lib/mobi/opf/manifest-node"
+
+# ルーチン
+# ZIPを解凍する
+# コミックスと小説を判定する
+#   小説
+#       .mdファイルを変換し，除外する
+# 
