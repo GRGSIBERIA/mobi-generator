@@ -7,8 +7,19 @@ module Mobi
         # コンテンツの掲載順を定義する
         #
         class SpineNode < NodeBase
-            # @return [Array<Mobi::OPF::ItemContainer>] ディレクトリを除いたファイルを返却する
+            # @return [Array<Mobi::OPF::ItemContainer>] ディレクトリを除いたファイル
             attr_reader :items
+            
+            # @return [*rray<Mobi::OPF::ItemContainer>] 掲載順のファイル
+            attr_reader :published
+
+            # @return [Array<Mobi::OPF::ItemContainer>] 目次ページ
+            attr_reader :toc
+
+            # @return [Boolean] コミック形式か否か
+            def is_comic?
+                is_comic
+            end
 
             # Spineノード
             # コンテンツの掲載順を定義する
@@ -18,31 +29,29 @@ module Mobi
             def initialize(package, items, is_comic=false)
                 super(package, "spine", nil, {"toc" => "ncx"})
                 @items = []
+                @published = []
                 @toc = nil 
+                @is_comic = is_comic
 
-                expand_htmls(items) # @itemsと@tocに代入
+                expand_items(items) # @itemsと@tocに代入
                 sort_items()        # @itemsをソートする
                 record_items()      # @itemsから掲載するファイルを抽出する
             end
 
             private
             # HTMLのみを抽出する
-            def expand_htmls(items)
+            def expand_items(items)
                 for item in items
                     if item.is_dir? then    # ディレクトリの場合は除外
                         next
                     end 
 
-                    if item.ext == ".html" or item.ext == ".htm" then 
-                        #item.generate_itemref(self)    # ディレクトリ以外はitem要素として追加し続ける
-
-                        # 目次は先頭に置きたいので除外する
-                        if item.id.include?("toc")
-                            @toc = item 
-                            next
-                        end
-                        @items << item
+                    # 目次は先頭に置きたいので除外する
+                    if item.id.include?("toc")
+                        @toc = item 
+                        next
                     end
+                    @items << item
                 end
             end
 
@@ -66,16 +75,19 @@ module Mobi
                 @items.sort!{|a,b| get_number_from_path(a) <=> get_number_from_path(b)}
             end
 
-            def record_items(is_comic)
+            def record_items
                 # 書籍の形式によってspineに掲載するファイルを変更する
+                published << @toc
                 for item in @items 
-                    if is_comic then 
+                    if @is_comic then 
                         if item.ext == ".png" or item.ext == ".jpg" or item.ext == ".jpeg" then 
                             item.generate_itemref(self)
+                            published << item 
                         end
                     else
                         if item.ext == ".htm" or item.ext == ".html" then 
                             item.generate_itemref(self)
+                            published << item
                         end
                     end
                 end

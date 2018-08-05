@@ -17,5 +17,6 @@ class ManifestNodeTest < Minitest::Test
         
         assert_equal @n.node.children[0].name, "item"
         assert_equal @n.node.children[0].attribute("id").to_s, "__index_html"
+        assert_equal @n.node.children[1].attribute("id").to_s, "__test_jpg"
     end
 end
