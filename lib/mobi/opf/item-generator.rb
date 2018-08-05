@@ -13,8 +13,8 @@ module Mobi
             # @return [Array<ItemContainer>] すべてのItemContainerを返す
             attr_reader :all
 
-            # @return [ItemContainer] index.html
-            attr_reader :index
+            # @return [ItemContainer] toc.html
+            attr_reader :toc
 
             # @return [ItemContainer] cover.jpg
             attr_reader :cover
@@ -38,8 +38,8 @@ module Mobi
                     item = ItemContainer.new(path)
                     unless item.is_dir? then
                         path = item.path.downcase
-                        if path.include?("index.htm") or path.include?("index.html") then 
-                            @index = item
+                        if path.include?("toc.htm") or path.include?("toc.html") then 
+                            @toc = item
                             @manifest_items << item
                             @spine_items << item
                         elsif path.include?("cover.jpg") or path.include?("cover.jpeg") then 

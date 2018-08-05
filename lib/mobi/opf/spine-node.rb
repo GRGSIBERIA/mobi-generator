@@ -30,7 +30,7 @@ module Mobi
                 super(package, "spine", nil, {"toc" => "ncx"})
                 @items = []
                 @published = []
-                @toc = nil 
+                @toc = nil
                 @is_comic = is_comic
 
                 expand_items(items) # @itemsと@tocに代入
