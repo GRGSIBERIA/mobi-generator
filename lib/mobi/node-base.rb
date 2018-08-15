@@ -2,7 +2,7 @@
 require "rexml/document"
 
 module Mobi
-        module OPF
+        module Node
         #
         # ノードのベースクラス
         #

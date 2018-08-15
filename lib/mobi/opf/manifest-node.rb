@@ -5,7 +5,7 @@ module Mobi
         #
         # Manifestノード
         #
-        class ManifestNode < NodeBase
+        class ManifestNode < Mobi::Node::NodeBase
             # @return [Array<Mobi::OPF::ItemContainer>] ItemContainerのインスタンスを返却する
             attr_reader :items
 

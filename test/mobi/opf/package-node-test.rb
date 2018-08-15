@@ -5,7 +5,7 @@ class PackageNodeTest < Minitest::Test
 
     def test_new
         n = PackageNode.new
-        assert_equal n.kind_of?(NodeBase), true
+        assert_equal n.kind_of?(Mobi::Node::NodeBase), true
         assert_equal n.node.name, "package"
     end
 

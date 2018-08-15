@@ -6,7 +6,7 @@ module Mobi
         # Spineノード
         # コンテンツの掲載順を定義する
         #
-        class SpineNode < NodeBase
+        class SpineNode < Mobi::Node::NodeBase
             # @return [Array<Mobi::OPF::ItemContainer>] ディレクトリを除いたファイル
             attr_reader :items
             

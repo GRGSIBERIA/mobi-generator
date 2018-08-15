@@ -1,7 +1,7 @@
 #-*- encoding: utf-8
 
 class NodeBaseTest < Minitest::Test
-    include Mobi::OPF
+    include Mobi::Node
 
     def test_new
         n = NodeBase.new(nil, "package")

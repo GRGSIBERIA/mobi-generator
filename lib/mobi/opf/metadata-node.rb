@@ -7,7 +7,7 @@ module Mobi
         #
         # Metadataノード
         #
-        class MetadataNode < NodeBase
+        class MetadataNode < Mobi::Node::NodeBase
             # Metadataノード
             # @param [PackageNode] 親ノード
             # @param [Hash] data 必要なデータ
@@ -34,27 +34,27 @@ module Mobi
             end
 
             def generate_dcmeta(data)
-                dcmeta = NodeBase.new(self, "dc-metadata")
-                NodeBase.new(dcmeta, "dc:title", data[:title])
-                NodeBase.new(dcmeta, "dc:language", "en-us")
-                NodeBase.new(dcmeta, "dc:publisher", @publisher)
+                dcmeta = Mobi::Node::NodeBase.new(self, "dc-metadata")
+                Mobi::Node::NodeBase.new(dcmeta, "dc:title", data[:title])
+                Mobi::Node::NodeBase.new(dcmeta, "dc:language", "en-us")
+                Mobi::Node::NodeBase.new(dcmeta, "dc:publisher", @publisher)
                 generate_list(dcmeta, "dc:creator", data[:creator], true)
                 generate_list(dcmeta, "dc:contributor", data[:contributor])
-                NodeBase.new(dcmeta, "dc:description", data[:description])
-                NodeBase.new(dcmeta, "dc:date", Date.today.strftime("%d/%m/%Y"))
+                Mobi::Node::NodeBase.new(dcmeta, "dc:description", data[:description])
+                Mobi::Node::NodeBase.new(dcmeta, "dc:date", Date.today.strftime("%d/%m/%Y"))
 
                 # IDの発行
                 identifier = generate_id(data)
-                NodeBase.new(dcmeta, "dc:identifier", identifier)
+                Mobi::Node::NodeBase.new(dcmeta, "dc:identifier", identifier)
             end
 
             def generate_xmeta(data)
-                xmeta = NodeBase.new(self, "x-metadata")
-                NodeBase.new(xmeta, "output", nil, {
+                xmeta = Mobi::Node::NodeBase.new(self, "x-metadata")
+                Mobi::Node::NodeBase.new(xmeta, "output", nil, {
                     "encoding" => "utf-8",
                     "content-type" => "text/x-oeb1-document"
                 })
-                NodeBase.new(xmeta, "EmbeddedCover", "cover.jpg")
+                Mobi::Node::NodeBase.new(xmeta, "EmbeddedCover", "cover.jpg")
             end
         end
     end

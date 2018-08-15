@@ -5,7 +5,7 @@ module Mobi
         #
         # packageノード，OPFのルートノード
         #
-        class PackageNode < NodeBase
+        class PackageNode < Mobi::Node::NodeBase
             # packageノード，OPFのルートノード
             def initialize
                 super(nil, "package", nil, {

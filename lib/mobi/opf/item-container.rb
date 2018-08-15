@@ -56,13 +56,13 @@ module Mobi
 
             # itemノードを生成する
             # @param manifest [Mobi::OPF::ManifestNode] マニフェストノード
-            # @return [Mobi::OPF::NodeBase] item要素
+            # @return [Mobi::Node::NodeBase] item要素
             def generate_item(manifest)
                 if manifest.name != "manifest" then
                     throw DontMatchParentError
                 end
 
-                return NodeBase.new(manifest, "item", nil, {
+                return Mobi::Node::NodeBase.new(manifest, "item", nil, {
                     "href" => @path,
                     "id" => @id,
                     "media_type" => @media_type
@@ -71,13 +71,13 @@ module Mobi
 
             # itemrefノードを生成する
             # @param spine [Mobi::OPF::SpineNode] データ列ノード
-            # @return [Mobi::OPF::NodeBase] itemref要素
+            # @return [Mobi::Node::NodeBase] itemref要素
             def generate_itemref(spine)
                 if spine.name != "spine" then 
                     throw DontMatchParentError 
                 end
 
-                return NodeBase.new(spine, "itemref", nil, {
+                return Mobi::Node::NodeBase.new(spine, "itemref", nil, {
                     "idref" => @id
                 })
             end
