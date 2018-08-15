@@ -62,8 +62,8 @@ module Mobi
 
             def manifest
                 items = ""
-                for path in @data[:pathes]
-                    item = ItemContainer.new(path)
+                for item in @items
+                    
                 end
                 create_node("manifest", {}, items)
             end

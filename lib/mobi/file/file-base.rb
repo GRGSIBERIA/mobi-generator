@@ -30,6 +30,11 @@ module Mobi
             def initialize(data)
                 @data = data 
                 @text = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+
+                @items = []
+                for path in @data[:pathes]
+                    items << ItemContainer.new(path)
+                end
             end
 
             # @return [String] 文字列を出力する
