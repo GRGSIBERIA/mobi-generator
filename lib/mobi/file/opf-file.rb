@@ -11,7 +11,9 @@ module Mobi
             # @option data [Boolean] :is_text 
             # @option data [Array<String>] :pathes ファイルのパス
             def initialize(data)
-                
+                data[:date] = Date.today.strftime("%d/%m/%Y")
+
+                metadata()
             end
 
             private
