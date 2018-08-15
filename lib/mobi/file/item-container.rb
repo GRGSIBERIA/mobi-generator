@@ -24,9 +24,9 @@ module Mobi
             # @param filepath [String] ZIPファイル上のパス
             def initialize(filepath)
                 @path = filepath
-                @ext = File.extname(filepath).downcase
-                @basename = File.basename(filepath)
-                @id = File.basename(filepath.gsub(/[\/|\\|\.]/, "_"))
+                @ext = ::File.extname(filepath).downcase
+                @basename = ::File.basename(filepath)
+                @id = ::File.basename(filepath.gsub(/[\/|\\|\.]/, "_"))
 
                 # この段階ですべて変換が済んでいると仮定する
                 case @ext

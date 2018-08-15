@@ -18,10 +18,12 @@ module Mobi
                 @data[:date] = Date.today.strftime("%d/%m/%Y")
 
                 @metadata = metadata()
+                @manifest = manifest()
+                @spine = spine()
 
                 @text += create_node("package", {
                     "unique-identifier" => "uid"
-                }, @metadata)
+                }, @metadata + @manifest + @spine)
             end
 
             private
@@ -61,9 +63,13 @@ module Mobi
             def manifest
                 items = ""
                 for path in @data[:pathes]
-
+                    item = ItemContainer.new(path)
                 end
                 create_node("manifest", {}, items)
+            end
+
+            def spine
+                ""
             end
         end
     end
