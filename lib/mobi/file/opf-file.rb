@@ -17,6 +17,10 @@ module Mobi
                 metadata()
             end
 
+            def output 
+
+            end
+
             private
             def metadata
                 ##################################################
@@ -54,7 +58,7 @@ module Mobi
             def manifest
                 items = ""
                 for path in @data[:pathes]
-                    
+
                 end
                 create_node("manifest", {}, items)
             end
