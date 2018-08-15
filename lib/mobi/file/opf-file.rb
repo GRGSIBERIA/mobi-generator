@@ -1,4 +1,5 @@
 #-*- encoding: utf-8
+require "date"
 
 module Mobi
     module File
@@ -11,14 +12,16 @@ module Mobi
             # @option data [Boolean] :is_text 
             # @option data [Array<String>] :pathes ファイルのパス
             def initialize(data)
-                # Dateは自動的に挿入する
-                data[:date] = Date.today.strftime("%d/%m/%Y")
+                super(data)
 
-                metadata()
-            end
+                # Dateは強制的に挿入する
+                @data[:date] = Date.today.strftime("%d/%m/%Y")
 
-            def output 
+                @metadata = metadata()
 
+                @text += create_node("package", {
+                    "unique-identifier" => "uid"
+                }, @metadata)
             end
 
             private

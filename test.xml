@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><package unique-identifier="uid"><metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc-metadata xmlns:dc="http://purl.org/metadata/dublin_core" xmlns:oebpackage="http://openebook.org/namespaces/oeb-package/1.0/"><dc:title>title</dc:title>
+<dc:creator>testA</dc:creator>
+<dc:creator>testB</dc:creator>
+<dc:creator>testC</dc:creator>
+<dc:description>こんにちは</dc:description>
+<dc:contributor>test</dc:contributor>
+<dc:date>15/08/2018</dc:date>
+</dc-metadata>
+<x-metadata><output encoding="utf-8" content-type="text/x-oeb1-document" />
+<EmbeddedCover>cover.jpg</EmbeddedCover>
+</x-metadata>
+</metadata>
+</package>

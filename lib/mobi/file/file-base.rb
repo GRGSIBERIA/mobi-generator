@@ -29,12 +29,18 @@ module Mobi
             # @option data [Array<String>] :pathes ファイルのパス
             def initialize(data)
                 @data = data 
-                @text = "<?xml version='1.0' encoding='UTF-8'?>"
+                @text = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             end
 
             # @return [String] 文字列を出力する
             def out_text
                 @text
+            end
+
+            def out_file(path)
+                ::File.open(path, "w") do |f|
+                    f.puts(@text)
+                end
             end
 
             private
@@ -43,12 +49,12 @@ module Mobi
             # @param [Hash] attributes 属性値
             def create_node(node_name, attributes={}, inner_text=nil)
                 attr_text = ""
-                attributes.each {|k, v| attr_text += "#{k.to_s}='#{v.to_s}'"}
+                attributes.each {|k, v| attr_text += " #{k.to_s}=\"#{v.to_s}\""}
                 
                 if inner_text.nil? or inner_text == "" then
-                    return "<#{node_name} #{attr_text} />"
+                    return "<#{node_name}#{attr_text} />\n"
                 end
-                "<#{node_name} #{attr_text}>#{inner_text}</#{node_name}>"
+                "<#{node_name}#{attr_text}>#{inner_text}</#{node_name}>\n"
             end
         end
     end
