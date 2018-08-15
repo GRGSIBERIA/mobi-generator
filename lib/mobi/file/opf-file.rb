@@ -11,6 +11,7 @@ module Mobi
             # @option data [Boolean] :is_text 
             # @option data [Array<String>] :pathes ファイルのパス
             def initialize(data)
+                # Dateは自動的に挿入する
                 data[:date] = Date.today.strftime("%d/%m/%Y")
 
                 metadata()
@@ -18,19 +19,44 @@ module Mobi
 
             private
             def metadata
+                ##################################################
+                # dcmetadataの作成
                 dcmeta_nodes = ""
                 dcmeta_nodes += check_as_output("dc:", :title)
                 dcmeta_nodes += check_as_output("dc:", :creator)
                 dcmeta_nodes += check_as_output("dc:", :description)
                 dcmeta_nodes += check_as_output("dc:", :contributor)
                 dcmeta_nodes += check_as_output("dc:", :date)
-
-                xmeta_nodes = ""
                 
+                dcmetadata = create_node("dc-metadata", {
+                    "xmlns:dc" => "http://purl.org/metadata/dublin_core", 
+                    "xmlns:oebpackage" => "http://openebook.org/namespaces/oeb-package/1.0/"
+                }, dcmeta_nodes)
 
+                ##################################################
+                # x-metadataの作成
+                xmeta_nodes = ""
+                xmeta_nodes += create_node("output", {
+                    "encoding" => "utf-8",
+                    "content-type" => "text/x-oeb1-document"
+                })
+                xmeta_nodes += create_node("EmbeddedCover", {}, "cover.jpg")
+
+                xmetadata = create_node("x-metadata", {}, xmeta_nodes)
+
+                ##################################################
+                # dc-metadataとx-metadataをmetadata内に挿入
                 create_node("metadata", {
                     "xmlns:dc" => "http://purl.org/dc/elements/1.1/"
-                }, dcmeta_nodes + xmeta_nodes)
+                }, dcmetadata + xmetadata)
+            end
+
+            def manifest
+                items = ""
+                for path in @data[:pathes]
+                    
+                end
+                create_node("manifest", {}, items)
             end
         end
     end
