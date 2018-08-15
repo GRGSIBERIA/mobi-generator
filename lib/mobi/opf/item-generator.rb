@@ -32,6 +32,9 @@ module Mobi
                 @spine_items = []
 
                 # toc.ncxをここで付加させておく
+                if pathes.nil? or pathes.size <= 0 then
+                    raise EmptyZippedFilesError
+                end
                 pathes << "toc.ncx"
 
                 for path in pathes 

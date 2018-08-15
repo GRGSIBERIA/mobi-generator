@@ -30,6 +30,7 @@ module Mobi
                     if parent.kind_of?(NodeBase) then 
                         parent.node.add_element(@node)
                     end
+                    @doc = nil
                 end
 
                 unless text.nil? then
@@ -43,6 +44,11 @@ module Mobi
                         end
                     end
                 end
+            end
+
+            # @return [REXML::Document] ドキュメントルートを返す
+            def outxml
+                return @doc
             end
 
             # @return [String] 要素名

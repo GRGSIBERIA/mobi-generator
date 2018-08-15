@@ -16,5 +16,8 @@ module Mobi
 
         # ファイル名末尾（拡張子を除く）に数値が含まれない場合のエラー
         class DontHasNumberFromFileError < OPFError; end 
+
+        # ZIPファイルの中身が空の可能性
+        class EmptyZippedFilesError < OPFError; end 
     end
 end
