@@ -11,4 +11,5 @@
 </x-metadata>
 </metadata>
 <manifest><item href="hoge.html" id="hoge_html" media-type="text/x-oeb1-document" /></manifest>
-<spine toc="ncx" /></package>
+<spine toc="ncx"><itemref idref="hoge_html" /></spine>
+</package>

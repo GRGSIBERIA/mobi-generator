@@ -20,6 +20,9 @@ module Mobi
             # @return [String] mime-type
             attr_reader :media_type
 
+            # @return [Symbol, Nil] テキストかイラストか
+            attr_reader :data_type
+
             # アイテム用のノード
             # @param filepath [String] ZIPファイル上のパス
             def initialize(filepath)
@@ -27,15 +30,19 @@ module Mobi
                 @ext = ::File.extname(filepath).downcase
                 @basename = ::File.basename(filepath)
                 @id = ::File.basename(filepath.gsub(/[\/|\\|\.]/, "_"))
+                @data_type = :other
 
                 # この段階ですべて変換が済んでいると仮定する
                 case @ext
                 when ".jpg", ".jpeg"
                     @media_type = "image/jpeg"
+                    @data_type = :picture
                 when ".png"
                     @media_type = "image/png"
-                when ".htm", ".html", ".txt"
+                    @data_type = :picture
+                when ".htm", ".html"
                     @media_type = "text/x-oeb1-document"
+                    @data_type = :text
                 when ".css"
                     @media_type = "text/css"
                 when ".ttf"
