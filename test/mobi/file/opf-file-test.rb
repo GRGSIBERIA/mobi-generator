@@ -9,6 +9,7 @@ class OPFFileTest < Minitest::Test
             creator: ["testA", "testB", "testC"],
             description: "こんにちは",
             contributor: "test",
+            publisher: ["玖理刻", "角川"],
             is_text: true,
             pathes: [
                 "hoge.html"
@@ -19,6 +20,7 @@ class OPFFileTest < Minitest::Test
 
     def test_out_text
         assert_equal @n.out_text.include?("こんにちは"), true
+        assert_equal @n.out_text.include?("testA"), true
     end
 
     def test_out_file

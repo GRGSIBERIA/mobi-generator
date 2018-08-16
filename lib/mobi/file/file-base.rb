@@ -25,11 +25,12 @@ module Mobi
             # @option data [String, Array<String>] :creator 著者もしくは連名著者, required
             # @option data [String] :description 概要, required
             # @option data [String, Array<String>, NilClass] :contributor 貢献者
+            # @option data [String, Array<String>] :publisher 出版社, required
             # @option data [Boolean] :is_text 
             # @option data [Array<String>] :pathes ファイルのパス
             def initialize(data)
                 @data = data 
-                @text = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+                @text = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
 
                 @items = []
                 for path in @data[:pathes]
@@ -57,7 +58,7 @@ module Mobi
                 attributes.each {|k, v| attr_text += " #{k.to_s}=\"#{v.to_s}\""}
                 
                 if inner_text.nil? or inner_text == "" then
-                    return "<#{node_name}#{attr_text} />\n"
+                    return "<#{node_name}#{attr_text} />"
                 end
                 "<#{node_name}#{attr_text}>#{inner_text}</#{node_name}>\n"
             end
