@@ -27,7 +27,7 @@ module Mobi
             # @option data [String, Array<String>, NilClass] :contributor 貢献者
             # @option data [String, Array<String>] :publisher 出版社, required
             # @option data [Boolean] :is_text 
-            # @option data [Array<String>] :pathes ファイルのパス
+            # @option data [Array<String>] :pathes ソート済みのファイルのパス
             def initialize(data)
                 @data = data 
                 @text = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"

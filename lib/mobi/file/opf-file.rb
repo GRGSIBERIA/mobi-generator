@@ -9,8 +9,9 @@ module Mobi
             # @option data [String, Array<String>] :creator 著者もしくは連名著者, required
             # @option data [String] :description 概要, required
             # @option data [String, Array<String>, NilClass] :contributor 貢献者
+            # @option data [String, Array<String>] :publisher 出版社, required
             # @option data [Boolean] :is_text 
-            # @option data [Array<String>] :pathes ファイルのパス
+            # @option data [Array<String>] :pathes ソート済みのファイルのパス
             def initialize(data)
                 super(data)
 
