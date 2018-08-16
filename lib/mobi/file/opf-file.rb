@@ -61,11 +61,15 @@ module Mobi
             end
 
             def manifest
-                items = ""
+                items_text = ""
                 for item in @items
-                    
+                    items_text += create_node("item", {
+                        "href" => item.path,
+                        "id" => item.id,
+                        "media-type" => item.media_type
+                    })
                 end
-                create_node("manifest", {}, items)
+                create_node("manifest", {}, items_text)
             end
 
             def spine

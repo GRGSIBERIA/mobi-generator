@@ -4,11 +4,12 @@
 <dc:creator>testC</dc:creator>
 <dc:description>こんにちは</dc:description>
 <dc:contributor>test</dc:contributor>
-<dc:date>15/08/2018</dc:date>
+<dc:date>16/08/2018</dc:date>
 </dc-metadata>
 <x-metadata><output encoding="utf-8" content-type="text/x-oeb1-document" />
 <EmbeddedCover>cover.jpg</EmbeddedCover>
 </x-metadata>
 </metadata>
-<manifest />
+<manifest><item href="hoge.html" id="hoge_html" media-type="text/x-oeb1-document" />
+</manifest>
 </package>
