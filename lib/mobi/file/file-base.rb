@@ -33,7 +33,7 @@ module Mobi
 
                 @items = []
                 for path in @data[:pathes]
-                    items << ItemContainer.new(path)
+                    @items << ItemContainer.new(path)
                 end
             end
 
