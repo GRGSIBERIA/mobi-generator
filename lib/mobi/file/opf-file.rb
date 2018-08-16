@@ -73,7 +73,13 @@ module Mobi
             end
 
             def spine
-                ""
+                refs_text = ""
+                for item in @items
+
+                end
+                create_node("spine", {
+                    "toc" => "ncx"
+                }, refs_text)
             end
         end
     end
