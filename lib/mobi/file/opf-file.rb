@@ -76,10 +76,21 @@ module Mobi
             def spine
                 refs_text = ""
                 for item in @items
-                    if @data[:is_text] and item.data_type == :text then
+                    
+                    ##############################
+                    # 表紙だけ例外にしたい
+                    if not @data[:is_text] and item.data_type == :text and item.basename.include?("index") then 
                         refs_text += create_node("itemref", {
                             "idref" => item.id
                         })
+                    ##############################
+                    # テキストを表示したい
+                    elsif @data[:is_text] and item.data_type == :text then
+                        refs_text += create_node("itemref", {
+                            "idref" => item.id
+                        })
+                    ##############################
+                    # イラストを表示したい
                     elsif not @data[:is_text] and item.data_type == :picture then
                         refs_text += create_node("itemref", {
                             "idref" => item.id

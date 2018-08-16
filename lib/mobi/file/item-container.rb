@@ -23,6 +23,9 @@ module Mobi
             # @return [Symbol, Nil] テキストかイラストか
             attr_reader :data_type
 
+            # @return [String] ファイル名
+            attr_reader :basename
+
             # アイテム用のノード
             # @param filepath [String] ZIPファイル上のパス
             def initialize(filepath)
