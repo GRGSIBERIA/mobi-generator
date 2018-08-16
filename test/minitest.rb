@@ -13,7 +13,7 @@ require "zip"
 # 依存性のないファイル
 #
 require "./lib/mobi/parser/ruby"
-require "./lib/mobi/parser/mathml"
+#require "./lib/mobi/parser/mathml" # texmathの実行ファイルにパスを通す
 
 #require "./lib/mobi/opf/errors"
 #require "./lib/mobi/opf/item-container"
@@ -42,7 +42,7 @@ require "./lib/mobi/file/opf-file.rb"
 # テスト本体
 #
 require "./test/mobi/parser/ruby-parser-test"
-require "./test/mobi/parser/mathml-parser-test" # texmathの実行ファイルにパスを通す
+#require "./test/mobi/parser/mathml-parser-test" # texmathの実行ファイルにパスを通す
 
 
 #require "./test/mobi/node-base-test"

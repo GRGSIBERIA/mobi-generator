@@ -17,7 +17,12 @@ class OPFFileTest < Minitest::Test
         @n = OPFFile.new(@data)
     end
 
-    def test_new
-        puts @n.out_file("./test.xml")
+    def test_out_text
+        assert_equal @n.out_text.include?("こんにちは"), true
+    end
+
+    def test_out_file
+        @n.out_file("./test.xml")
+        assert_equal File.exists?("./test.xml"), true
     end
 end
