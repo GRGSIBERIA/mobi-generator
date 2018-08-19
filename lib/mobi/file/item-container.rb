@@ -26,6 +26,9 @@ module Mobi
             # @return [String] ファイル名
             attr_reader :basename
 
+            # @return [Integer, Nil] ファイル番号
+            attr_reader :number
+
             # アイテム用のノード
             # @param filepath [String] ZIPファイル上のパス
             def initialize(filepath)
@@ -34,6 +37,7 @@ module Mobi
                 @basename = ::File.basename(filepath)
                 @id = ::File.basename(filepath.gsub(/[\/|\\|\.]/, "_"))
                 @data_type = :other
+                @number = @id.gsub(/^[\d]/, "").to_i
 
                 # この段階ですべて変換が済んでいると仮定する
                 case @ext

@@ -5,11 +5,12 @@
 <dc:creator>testC</dc:creator>
 <dc:description>こんにちは</dc:description>
 <dc:contributor>test</dc:contributor>
-<dc:date>17/08/2018</dc:date>
+<dc:date>18/08/2018</dc:date>
 </dc-metadata>
 <x-metadata><output encoding="utf-8" content-type="text/x-oeb1-document" /><EmbeddedCover>cover.jpg</EmbeddedCover>
 </x-metadata>
 </metadata>
-<manifest><item href="hoge.html" id="hoge_html" media-type="text/x-oeb1-document" /></manifest>
-<spine toc="ncx"><itemref idref="hoge_html" /></spine>
+<manifest><item href="cover.jpg" id="cover_jpg" media-type="image/jpeg" /><item href="toc.html" id="toc_html" media-type="text/x-oeb1-document" /><item href="hoge.html" id="hoge_html" media-type="text/x-oeb1-document" /></manifest>
+<spine toc="ncx"><itemref idref="toc_html" /><itemref idref="hoge_html" /></spine>
+<tours /><guide><referencce href="cover.jpg" title="カバー" type="text" /><referencce href="toc.html" title="目次" type="text" /><referencce href="hoge.html" title="本文" type="text" /></guide>
 </package>

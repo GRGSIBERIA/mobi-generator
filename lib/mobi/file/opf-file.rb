@@ -12,6 +12,9 @@ module Mobi
             # @option data [String, Array<String>] :publisher 出版社, required
             # @option data [Boolean] :is_text 
             # @option data [Array<String>] :pathes ソート済みのファイルのパス
+            # @option data [Array<Hash>] :guide ガイド用のデータ, cover.html，toc.htmlが先頭にある前提
+            # @option data[:guide] [String] :path ガイドに表示したいパス
+            # @option data[:guide] [String] :title ガイドのタイトル
             def initialize(data)
                 super(data)
 
@@ -21,10 +24,12 @@ module Mobi
                 @metadata = metadata()
                 @manifest = manifest()
                 @spine = spine()
+                @tours = tours()
+                @guide = guide()
 
                 @text += create_node("package", {
                     "unique-identifier" => "uid"
-                }, @metadata + @manifest + @spine)
+                }, @metadata + @manifest + @spine + @tours + @guide)
             end
 
             private
@@ -100,6 +105,29 @@ module Mobi
                 create_node("spine", {
                     "toc" => "ncx"
                 }, refs_text)
+            end
+
+            def tours
+                create_node("tours", {}, "")
+            end
+
+            def guide
+                guide_text = ""
+
+                for guide in @data[:guide]
+                    type = "text"
+                    if is_text and guide[:path].include?("toc.html")
+                        @items.each{|item| guide[:path].include?("toc.html") ? "toc" : type}
+                    end
+                    @items.each{|item| guide[:path].include?("cover.jpg") ? "cover" : type}
+
+                    guide_text += create_node("referencce", {
+                        "href" => guide[:path],
+                        "title" => guide[:title],
+                        "type" => type
+                    })
+                end
+                create_node("guide", {}, guide_text)
             end
         end
     end
